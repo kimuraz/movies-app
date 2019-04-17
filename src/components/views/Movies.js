@@ -27,7 +27,7 @@ class Movies extends Component {
   }
 
   _newMovie() {
-    this.setState({ toggleForm: true, editingMovie: null });
+    this.setState({toggleForm: true, editingMovie: null});
   }
 
   render() {
@@ -35,11 +35,23 @@ class Movies extends Component {
     return (
       <Box padding={2}>
         <Box alignItems="end" marginBottom={3}>
-          <Button text="New Movie!" color="blue" onClick={() => this._newMovie()}/>
+          <Button
+            text="New Movie!"
+            color="blue"
+            onClick={() => this._newMovie()}
+          />
         </Box>
 
         {!movies.length && <Text>No movies to show you...</Text>}
-        {toggleForm && <MovieForm movie={editingMovie} toggleForm={() => this.setState({toggleForm: false})}/>}
+        {toggleForm && (
+          <MovieForm
+            movie={editingMovie}
+            toggleForm={() =>
+              window.confirm('Do you really want to leave?') &&
+              this.setState({toggleForm: false})
+            }
+          />
+        )}
       </Box>
     );
   }
