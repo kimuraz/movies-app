@@ -14,9 +14,6 @@ class Login extends Component {
     };
   }
 
-  componentWillMount() {
-  }
-
   _doLogin() {
     if (this.state.email && this.state.password) {
       doLogin(this.state).then(({ data }) => {
@@ -44,7 +41,6 @@ class Login extends Component {
         <TextField
           id="email"
           placeholder="Email"
-          style={{outline: 'none'}}
           onChange={this._linkState('email')}
         />
 
