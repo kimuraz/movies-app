@@ -7,6 +7,10 @@ const baseURL =
 const Api = axios.create({
   baseURL,
   timeout: 3000,
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
 });
 
 Api.interceptors.request.use(config => {
@@ -16,5 +20,9 @@ Api.interceptors.request.use(config => {
 }, err => Promise.reject(err));
 
 export const doLogin = credentials => Api.post('auth', credentials);
+export const getMovies = () => Api.get('movies');
+export const newMovie = (movie) => Api.post('movies', movie);
+export const editMovie = (id, movie) => Api.patch(`movies/${id}`, movie);
+export const deleteMovie = (id) => Api.delete(`movies/${id}`);
 
 export default Api;
