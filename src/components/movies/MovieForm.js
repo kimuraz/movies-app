@@ -1,5 +1,13 @@
 import React, {Component} from 'react';
-import {Modal, Box, Text, TextField, Label, TextArea, Button} from 'gestalt';
+import {
+  Modal,
+  Box,
+  Text,
+  TextField,
+  Label,
+  TextArea,
+  Button,
+} from 'gestalt';
 
 import {newMovie, editMovie} from '../../utils/Api';
 
@@ -20,9 +28,21 @@ class MovieForm extends Component {
 
   saveMovie() {
     if (this.props.movie) {
-      editMovie(this.state.id, this.state);
+      editMovie(this.state.id, this.state)
+        .then(() => {
+          this.props.toggleForm();
+        })
+        .catch(() => {
+          alert('Error while editing this movie, try again.');
+        });
     } else {
-      newMovie(this.state);
+      newMovie(this.state)
+        .then(() => {
+          this.props.toggleForm();
+        })
+        .catch(() => {
+          alert('Error while creating this movie, try again.');
+        });
     }
   }
 
@@ -31,13 +51,16 @@ class MovieForm extends Component {
   }
 
   render() {
-    const {movie} = this.state;
+    const {title, summary, cover} = this.state;
     return (
       <Modal
         accessibilityCloseLabel="close"
         accessibilityModalLabel="View default padding and styling"
-        heading={movie ? movie.title || 'New Movie' : 'New Movie'}
-        onDismiss={this.props.toggleForm}
+        heading={title || 'New Movie'}
+        onDismiss={() =>
+          window.confirm('Do you really want to leave?') &&
+          this.props.toggleForm()
+        }
         size="md">
         <Box padding={3}>
           <Box marginBottom={2}>
@@ -49,6 +72,7 @@ class MovieForm extends Component {
             id="title"
             placeholder="Title"
             onChange={this._linkState('title')}
+            value={title}
           />
 
           <Box marginBottom={2}>
@@ -61,21 +85,27 @@ class MovieForm extends Component {
             rows={3}
             placeholder="Sinopse"
             onChange={this._linkState('summary')}
+            value={summary}
           />
 
-          <Box marginBottom={2}>
-            <Label htmlFor="cover">
-              <Text>Link for Cover Image</Text>
-            </Label>
+          <Box column={12} display="flex" padding={1} alignItems="center">
+            <Box column={9}>
+              <Box marginBottom={2}>
+                <Label htmlFor="cover">
+                  <Text>Link for Cover Image</Text>
+                </Label>
+              </Box>
+              <TextField
+                id="cover"
+                placeholder="Cover Link"
+                onChange={this._linkState('cover')}
+                value={cover}
+              />
+            </Box>
           </Box>
-          <TextField
-            id="cover"
-            placeholder="Cover Link"
-            onChange={this._linkState('cover')}
-          />
 
           <Box marginBottom={2} marginTop={3}>
-            <Button text="Save" onClick={() => this.saveMovie()}/>
+            <Button text="Save" onClick={() => this.saveMovie()} />
           </Box>
         </Box>
       </Modal>
