@@ -18,6 +18,7 @@ class Login extends Component {
     if (this.state.email && this.state.password) {
       doLogin(this.state).then(({ data }) => {
         sessionStorage.setItem('token', data.auth_token);
+        window.location.href="/movies"
       });
     }
   }
@@ -41,6 +42,7 @@ class Login extends Component {
         <TextField
           id="email"
           placeholder="Email"
+          type="email"
           onChange={this._linkState('email')}
         />
 
@@ -52,6 +54,7 @@ class Login extends Component {
         <TextField
           id="password"
           placeholder="Password"
+          type="password"
           onChange={this._linkState('password')}
         />
 
