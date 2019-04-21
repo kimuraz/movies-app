@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {Box, Button, Text} from 'gestalt';
 
+import CommentForm from '../comments/CommentForm';
+
 import {getMovieById, getMovieComments} from '../../utils/Api';
 import './Comments.css';
 
@@ -12,6 +14,7 @@ class Comments extends Component {
     this.state = {
       movie: {},
       comments: [],
+      toggleForm: false,
     };
   }
 
@@ -19,14 +22,17 @@ class Comments extends Component {
     getMovieById(+this.props.match.params.id).then(({data}) => {
       this.setState({movie: data});
       getMovieComments(+this.props.match.params.id).then(({comments}) => {
-        console.log(comments);
         this.setState({comments: comments});
       });
     });
   }
 
+  _linkState(attr) {
+    return ({value}) => this.setState({[attr]: value});
+  }
+
   render() {
-    const {movie, comments} = this.state;
+    const {movie, comments, toggleForm} = this.state;
     return (
       <Box columns={12} padding={2}>
         <div className="MovieDetails">
@@ -43,6 +49,8 @@ class Comments extends Component {
 
           <Box column={12}>
             <h3>Comments</h3>
+            <Button text="Add comment" color="blue" onClick={() => this._linkState('toggleForm')({value: !toggleForm})}/>
+            {toggleForm && <CommentForm comment={{movie_id: movie.id}}/>}
 
             {comments && (
               <div className="MovieComments">
@@ -51,8 +59,6 @@ class Comments extends Component {
                 ))}
               </div>
             )}
-
-            <Button text="Add comment" color="blue"/>
           </Box>
         </div>
       </Box>
