@@ -21,8 +21,8 @@ class Comments extends Component {
   componentDidMount() {
     getMovieById(+this.props.match.params.id).then(({data}) => {
       this.setState({movie: data});
-      getMovieComments(+this.props.match.params.id).then(({comments}) => {
-        this.setState({comments: comments});
+      getMovieComments(+this.props.match.params.id).then(({data}) => {
+        this.setState({comments: data});
       });
     });
   }
@@ -55,7 +55,7 @@ class Comments extends Component {
             {comments && (
               <div className="MovieComments">
                 {comments.map(c => (
-                  <p>{c.comment}</p>
+                  <p key={c.id}>{c.comment}</p>
                 ))}
               </div>
             )}
