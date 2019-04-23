@@ -26,8 +26,11 @@ class CommentForm extends Component {
   }
 
   _save() {
+    const {postSave} = this.props;
     const {comment} = this.state;
-    this._getSaveMethod()({...this.props.comment, comment});
+    this._getSaveMethod()({...this.props.comment, comment}).then(() => {
+      postSave && postSave();
+    });
   }
 
   _linkState(attr) {
