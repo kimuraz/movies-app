@@ -57,7 +57,7 @@ class Comments extends Component {
           <Box column={12}>
             <h3>Comments</h3>
             <Button text="Add comment" color="blue" onClick={() => this._linkState('toggleForm')({value: !toggleForm})}/>
-            {toggleForm && <CommentForm comment={{movie_id: movie.id}}/>}
+            {toggleForm && <CommentForm comment={{movie_id: movie.id}} postSave={() => this.setState({toggleForm: false}, this.loadComments())}/>}
 
             {comments && (
               <div className="MovieComments">

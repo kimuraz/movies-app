@@ -40,7 +40,7 @@ class CommentForm extends Component {
   render() {
     return (
       <Box columns={12}>
-        <Box marginY={5}>
+        <Box marginTop={5}>
           <Label htmlFor="comment">
             <Text>Comment</Text>
           </Label>

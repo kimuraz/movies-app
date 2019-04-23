@@ -4,21 +4,10 @@ import {Box, Card, Avatar, Text, Button} from 'gestalt';
 import jwt_decode from 'jwt-decode';
 
 class MovieCard extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      decodedToken: null,
-    };
-  }
-
-  componentDidMount() {
-    this.setState({decodedToken: jwt_decode(sessionStorage.getItem('token'))});
-  }
 
   render() {
     const {movie, editMovie, delMovie} = this.props;
-    const {decodedToken} = this.state;
+    const decodedToken = jwt_decode(sessionStorage.getItem('token'));
     return (
       <Card
         image={<Avatar name={movie.title} src={movie.cover} />}
