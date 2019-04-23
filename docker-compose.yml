@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  app:
+    image: kimuraz/movies-app:1.0.1
+    ports:
+      - "80:80"
+    networks:
+      - default
+
+  api:
+    image: kimuraz/movies-api-ror:1.1.0
+    ports:
+      - "3000"
+    volumes:
+      - db:/opt/movies/db
+    networks:
+      - default
+
+volumes:
+  db:
+
+networks:
+  default:
+    driver: overlay
