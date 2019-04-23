@@ -31,10 +31,13 @@ class Login extends Component {
     return (
       <Container>
         { sessionStorage.getItem('token') && <Redirect to="/movies"/> }
-        <Text align="center" size="xl" color="navy">
-          Movies - Login
-        </Text>
-        <Box marginBottom={2}>
+        <Box marginTop={10}>
+          <Text align="center" size="xl" color="navy">
+            Movies - Login
+          </Text>
+        </Box>
+
+        <Box marginBottom={3} marginTop={6}>
           <Label htmlFor="email">
             <Text>Email</Text>
           </Label>
@@ -46,7 +49,7 @@ class Login extends Component {
           onChange={this._linkState('email')}
         />
 
-        <Box marginBottom={2}>
+        <Box marginBottom={3} marginTop={3}>
           <Label htmlFor="password">
             <Text>Password</Text>
           </Label>
@@ -58,7 +61,7 @@ class Login extends Component {
           onChange={this._linkState('password')}
         />
 
-        <Box marginTop={2}>
+        <Box marginTop={3}>
           <Button text="Sign In" color="gray" onClick={() => this._doLogin()}/>
         </Box>
       </Container>
