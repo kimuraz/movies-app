@@ -13,7 +13,7 @@ class App extends Component {
           {sessionStorage.getItem('token') && (
             <Box marginRight={2} padding={1}>
               <Button
-                size="xs"
+                size="sm"
                 color="white"
                 text="Logout"
                 onClick={() => {
