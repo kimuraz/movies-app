@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import {Box, Button} from 'gestalt';
 import MovieRouter from './MovieRouter';
 
 import './App.css';
@@ -9,9 +10,22 @@ class App extends Component {
     return (
       <div className="App">
         <header className="AppHeader">
+          {sessionStorage.getItem('token') && (
+            <Box marginRight={2} padding={1}>
+              <Button
+                size="xs"
+                color="white"
+                text="Logout"
+                onClick={() => {
+                  sessionStorage.removeItem('token');
+                  window.location.href = '/';
+                }}
+              />
+            </Box>
+          )}
         </header>
 
-        <MovieRouter/>
+        <MovieRouter />
       </div>
     );
   }
