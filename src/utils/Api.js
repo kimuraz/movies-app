@@ -19,6 +19,14 @@ Api.interceptors.request.use(config => {
   return config;
 }, err => Promise.reject(err));
 
+Api.interceptors.response.use(response => response, err => {
+  if (err.response.status === 401) {
+    sessionStorage.removeItem('token');
+    window.location.href = '/';
+  }
+  return Promise.reject(err)
+});
+
 export const doLogin = credentials => Api.post('auth', credentials);
 export const getMovies = () => Api.get('movies');
 export const getMovieById = id => Api.get(`movies/${id}`);
@@ -28,6 +36,6 @@ export const deleteMovie = (id) => Api.delete(`movies/${id}`);
 export const getMovieComments = id => Api.get(`movies/${id}/comments`);
 export const newComment = comment => Api.post(`comments`, comment);
 export const editComment = comment => Api.patch(`comments/${comment.id}`, comment);
-export const deleteComment = (id) => Api.delet(`comments/${id}`);
+export const deleteComment = (id) => Api.delete(`comments/${id}`);
 
 export default Api;
