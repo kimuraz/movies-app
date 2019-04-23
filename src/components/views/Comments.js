@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {Box, Button, Text} from 'gestalt';
 
 import CommentForm from '../comments/CommentForm';
+import CommentCard from '../comments/CommentCard';
 
 import {getMovieById, getMovieComments} from '../../utils/Api';
 import './Comments.css';
@@ -16,15 +17,21 @@ class Comments extends Component {
       comments: [],
       toggleForm: false,
     };
+
+    this.loadComments = this.loadComments.bind(this);
   }
 
   componentDidMount() {
     getMovieById(+this.props.match.params.id).then(({data}) => {
       this.setState({movie: data});
+      this.loadComments();
+    });
+  }
+
+  loadComments() {
       getMovieComments(+this.props.match.params.id).then(({data}) => {
         this.setState({comments: data});
       });
-    });
   }
 
   _linkState(attr) {
@@ -55,7 +62,7 @@ class Comments extends Component {
             {comments && (
               <div className="MovieComments">
                 {comments.map(c => (
-                  <p key={c.id}>{c.comment}</p>
+                  <CommentCard comment={c} key={c.id} loadComments={this.loadComments}/>
                 ))}
               </div>
             )}
